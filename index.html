@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Grocery-store-cashier-line-simulation by HarshHarwani</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/HarshHarwani/grocery-store-cashier-line-simulation">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/HarshHarwani/grocery-store-cashier-line-simulation/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/HarshHarwani/grocery-store-cashier-line-simulation/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Grocery-store-cashier-line-simulation</h1>
+          <p></p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/HarshHarwani">HarshHarwani</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="grocery-store-cashier-line-simulation" class="anchor" href="#grocery-store-cashier-line-simulation" aria-hidden="true"><span class="octicon octicon-link"></span></a>grocery-store-cashier-line-simulation</h1>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>You are to write a program to implement a grocery store / cashier line simulation. This program should read input from a file, and print the resulting score to the console. The program should be a console-only program. The program should take a single command line parameter: the name of the input file.</p>
+
+<p>Customers in a grocery store arrive at a set of registers to check out. Each register is run by a cashier who serves customers on a first-come, first-served basis. The goal of the problem is to determine when all customers are done checking out.</p>
+
+<p>One of the most important criteria for a successful solution is that it correctly implements the problem to be solved. This will be determined by code inspection, acceptance testing using the 5 examples demonstrated below, as well as additional test cases not provided on this page.</p>
+
+<p>We will also be considering your overall approach to the problem and your programming style. This assignment is an opportunity to show off how you can use your object-oriented analysis and design skills to produce an elegant, readable, and maintainable solution. Please do NOT submit a multi-threaded or real-time solution. Please DO use what you would consider best practice in developing your solution.</p>
+
+<h2>
+<a id="problem-details" class="anchor" href="#problem-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problem Details</h2>
+
+<ol>
+<li>The number of registers is specified by the problem input file. Registers are numbered 1, 2, 3, ..., n for n registers.</li>
+<li>Time (<code>t</code>) is measured in minutes.</li>
+<li>The grocery store always has a single cashier in training. This cashier is always assigned to the highest numbered register.</li>
+<li>Regular registers take one minute to process each customer's item. The register staffed by the cashier in training takes two minutes for each item. So a customer with <code>n</code> items at a regular register takes <code>n</code> minutes to check out. However, if the customer ends up at the last register, it will take <code>2n</code> minutes to check out.</li>
+<li>The simulation starts at <code>t=0</code>. At that time all registers are empty (i.e. no customers are in line).</li>
+<li>Two types of customers arrive at the registers:
+
+<ul>
+<li>Customer Type A always chooses the register with the shortest line (least number of customers in line). If two or more registers have the shortest line, Customer Type A will choose the register with the lowest register number (e.g. register #1 would be chosen over register #3).</li>
+<li>Customer Type B looks at the last customer in each line, and always chooses to be behind the customer with the fewest number of items left to check out, regardless of how many other customers are in the line or how many items they have. Customer Type B will always choose an empty line before a line with any customers in it.</li>
+</ul>
+</li>
+<li>Customers just finishing checking out do not count as being in line (for either kind of customer).</li>
+<li>If two or more customers arrive at the same time, those with fewer items choose registers before those with more items. If the customers have the same number of items, then type A customers choose before type B customers.</li>
+</ol>
+
+<h2>
+<a id="input-format" class="anchor" href="#input-format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Format</h2>
+
+<p>The first line of the input file is a single integer specifying the number of registers.</p>
+
+<p>Each additional line is a whitespace-separated list of values. Each list specifies the customer type, customer arrival time (in minutes), and how many items that customer has respectively.</p>
+
+<p>Review the below examples for sample input and output.</p>
+
+<h3>
+<a id="example-1" class="anchor" href="#example-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example #1</h3>
+
+<p>For the following input file:</p>
+
+<pre><code>1
+A 1 2
+A 2 1
+</code></pre>
+
+<p>The following highlights occur:</p>
+
+<ul>
+<li>t=0 : Simulation starts with one register, which is a training register.</li>
+<li>t=1 : Customer #1 (type A) arrives with 2 items and goes to register #1, which starts servicing him.</li>
+<li>t=2 : Customer #2 (type A) arrives with 1 item and goes to register #1, behind Customer #1.</li>
+<li>t=3 : (Customer #1 now has one item left, since the first item took two minutes).</li>
+<li>t=5 : Customer #1 leaves and register #1 starts servicing Customer #2.</li>
+<li>t=7 : Customer #2 leaves.</li>
+</ul>
+
+<p>Here is the expected command output:</p>
+
+<pre><code>$ java -jar grocery.jar input.txt
+Finished at: t=7 minutes
+</code></pre>
+
+<h3>
+<a id="example-2" class="anchor" href="#example-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example #2</h3>
+
+<p>For the following input file:</p>
+
+<pre><code>2
+A 1 5
+B 2 1
+A 3 5
+B 5 3
+A 8 2
+</code></pre>
+
+<p>The following highlights occur:</p>
+
+<ul>
+<li>t=0 : Simulation starts with two registers; #2 is a training register.</li>
+<li>t=1 : Customer #1 (type A) arrives with 5 items and goes to register #1, which starts servicing him.</li>
+<li>t=2 : Customer #2 (type B) arrives with 1 item and goes to register #2 which starts servicing her.</li>
+<li>t=3 : Customer #3 (type A) arrives with 5 items. Since he is type A, he goes to register #1 (lowest number of two with equal number of customers), behind Customer #1.</li>
+<li>t=4 : Customer #2 leaves from register #2 (which took two minutes). (At this point, register #1 has 7 items total: 2 for Customer #1 and all 5 for Customer #3.)</li>
+<li>t=5 : Customer #4 (type B) arrives with 3 items. Since register #1 has customers with 6 items, and register #2 is empty, she goes to register #2 which starts servicing her.</li>
+<li>t=6 : Customer #1 leaves and register #1 starts servicing Customer #3.</li>
+<li>t=8 : Customer #5 (type A) arrives with 2 items. Since both registers have one person, she goes to register #1 behind Customer #3.</li>
+<li>t=11 : Customer #3 leaves and register #1 starts servicing Customer #5.</li>
+<li>t=11 : Customer #4 leaves from register #2.</li>
+<li>t=13 : Customer #5 leaves from register #1.</li>
+</ul>
+
+<p>Here is the expected command output:</p>
+
+<pre><code>$ java -jar grocery.jar input.txt
+Finished at: t=13 minutes
+</code></pre>
+
+<h3>
+<a id="example-3" class="anchor" href="#example-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example #3</h3>
+
+<p>For the following input file:</p>
+
+<pre><code>2
+A 1 2
+A 1 2
+A 2 1
+A 3 2
+</code></pre>
+
+<p>Here is the expected command output:</p>
+
+<pre><code>$ java -jar grocery.jar input.txt
+Finished at: t=6 minutes
+</code></pre>
+
+<p>This example illustrates the requirement that departing customers are not counted in line.</p>
+
+<h3>
+<a id="example-4" class="anchor" href="#example-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example #4</h3>
+
+<p>For the following input file:</p>
+
+<pre><code>2
+A 1 2
+A 1 3
+A 2 1
+A 2 1
+</code></pre>
+
+<p>Here is the expected command output:</p>
+
+<pre><code>$ java -jar grocery.jar input.txt
+Finished at: t=9 minutes
+</code></pre>
+
+<p>This example illustrates the requirement that customers with fewer items choose lines sooner.</p>
+
+<h3>
+<a id="example-5" class="anchor" href="#example-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example #5</h3>
+
+<p>For the following input file:</p>
+
+<pre><code>2
+A 1 3
+A 1 5
+A 3 1
+B 4 1
+A 4 1
+</code></pre>
+
+<p>Here is the expected command output:</p>
+
+<pre><code>$ java -jar grocery.jar input.txt
+Finished at: t=11 minutes
+</code></pre>
+
+<p>This example illustrates the requirement that customers of type A choose before customers of type B.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
