@@ -53,22 +53,22 @@ public class Customer implements Comparable<Customer> {
         this.timeArrived = registerArrived;
     }
 
-    public Integer decreaseItems(){
+    public Integer servedItems(){
         return --this.itemCount;
     }
     /**
      * 
-     * @param @Customer
+     * @param {@link}Customer
      * @return int
-     *  comparing the customers based on their types, if that is same
-     *  comparing them according to the number of items they have.
+     *  comparing the customers based on their item counts, if that is same
+     *  comparing them according to their type.
      */
     @Override
     public int compareTo(Customer o) {
         int val = 0;
-            val = this.type.compareTo(o.type);
-        if (val == 0) {
             val = this.itemCount.compareTo(o.itemCount);
+        if (val == 0) {
+            val = this.type.compareTo(o.type);
         }
         return val;
     }

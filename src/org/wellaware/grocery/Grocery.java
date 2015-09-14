@@ -6,24 +6,35 @@ import java.util.List;
 
 /**
  * 
- * @author hharwani Grocery class will have a list of Registers which will put
+ * @author hharwani Grocery class will have a list of Registers which will be put
  *         it in a registerList. The registerList will hold Register Objects.
  */
 public class Grocery {
 
     private List<Register> registerList = new ArrayList<Register>();
-
+    
+    /**
+     * inititalize the grocery with the number of registers.
+     * @param registers
+     */
     public Grocery(int registers) {
         for (int i = 0; i < registers; i++) {
             registerList.add(new Register(i));
         }
     }
-
+    /**
+     * List of all the registers in the grocery store.
+     * @return
+     */
     public List<Register> getRegisters() {
         return registerList;
     }
-
-    public Register getShortestRegisterBySize() {
+    
+    /**
+     * to help type A customer choose a register
+     * @return {@link Register}
+     */
+    public Register getShortRegisterBySize() {
         List<Register> sortedList = new ArrayList<Register>();
         for (Register register : registerList) {
             sortedList.add(register);
@@ -31,8 +42,12 @@ public class Grocery {
         Collections.sort(sortedList, Register.sizeComparator);
         return sortedList.get(0);
     }
-
-    public Register getSmallestRegisterByIndex() {
+    
+    /**
+     * to help type A customer choose a register
+     * @return {@link Register}
+     */
+    public Register getShortRegisterByIndex() {
         List<Register> sortedListByIndex = new ArrayList<Register>();
         for (Register register : registerList) {
             sortedListByIndex.add(register);
@@ -42,11 +57,12 @@ public class Grocery {
     }
 
     /**
-     * need to think about this method
      * 
-     * @return
+     * @return {@link Register}
+     * this is specifically for type B customer which looks at the last customer of a register or
+     * an empty register.
      */
-    public Register getRegisterWithLeastItemsAtEnd() {
+    public Register getRegisterLeastItemsEnd() {
         // how to get the
         List<Register> emptyList = new ArrayList<Register>();
         List<Register> listWithItems = new ArrayList<Register>();
@@ -65,21 +81,29 @@ public class Grocery {
         }
 
     }
-
-    public void assignCustomer(List<Customer> customerList) {
+    /**
+     * depending upon the type of customer and their constrains this method serves the right customer with right
+     * kind of register.
+     * @param customerList
+     */
+    public void serviceCustomer(List<Customer> customerList) {
         for (Customer customer : customerList) {
             if (customer.getType().equals(Type.A)) {
-                Register shortestRegister = getShortestRegisterBySize();
+                Register shortestRegister = getShortRegisterBySize();
                 shortestRegister.getCustomerList().offer(customer);
             } else {
-                Register registerwithleastItems = getRegisterWithLeastItemsAtEnd();
-                registerwithleastItems.getCustomerList()
-                        .offer(customer);
+                Register registerwithleastItems = getRegisterLeastItemsEnd();
+                registerwithleastItems.getCustomerList().offer(customer);
             }
         }
     }
-
-    public boolean isCustomerWaitingInRegister() {
+    /**
+     * to check if any of the registers in the store is serving customers.
+     * returns true if there are customers at any of the registers
+     * false otherwise
+     * @return boolean
+     */
+    public boolean isRegisterinService() {
         for (Register register : registerList) {
             if (register.getCustomerList().size() != 0)
                 return true;
