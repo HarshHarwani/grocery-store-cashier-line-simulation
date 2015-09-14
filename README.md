@@ -9,16 +9,6 @@ One of the most important criteria for a successful solution is that it correctl
 
 We will also be considering your overall approach to the problem and your programming style. This assignment is an opportunity to show off how you can use your object-oriented analysis and design skills to produce an elegant, readable, and maintainable solution. Please do NOT submit a multi-threaded or real-time solution. Please DO use what you would consider best practice in developing your solution.
 
-## Deliverables (all of the following)
-
-The following should be available in your resulting solution zip file:
-
-1. Source Code
-  * The source code should be in Java version 1.6+ or Groovy version 1.8+.
-  * Unit tests should be in [JUnit](http://junit.org).
-  * Build and package management should be in Maven 3.0+ or Gradle 2.0+.  Your build should package your project into an executable grocery.jar.
-1. Any other supporting code or other jars that you used to develop the solution (even if it is not required to run the solution). If a resource is easily accessible on the web you can just provide a link to it rather than including the files.
-
 ## Problem Details
 
 1. The number of registers is specified by the problem input file. Registers are numbered 1, 2, 3, ..., n for n registers.
