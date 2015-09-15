@@ -29,12 +29,11 @@ public class Register implements Comparable<Register> {
     public Integer getIndex() {
         return index;
     }
-  
+    /**
+     * For sorting the Register Objects by their size, this will be useful for assigning
+     * the correct register to Type A customers.
+     */
     public static Comparator<Register> sizeComparator = new Comparator<Register>() {
-        /**
-         * to get the smallest register in terms of size, i.e the number of
-           customers in each register
-         */
         @Override
         public int compare(Register o1, Register o2) {
             Integer size = o1.customerList.size();
@@ -43,8 +42,11 @@ public class Register implements Comparable<Register> {
         }
     };
 
-    // to get the smallest register by index
     @Override
+    /**
+     * For sorting the Register Objects by their index, will be useful for assigning
+     * correct register to both the type of customers depending on the situation. 
+     */
     public int compareTo(Register o) {
         return this.index.compareTo(o.index);
     }

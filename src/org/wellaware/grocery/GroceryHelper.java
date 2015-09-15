@@ -7,7 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Queue;
-
+/**
+ * @author hharwani
+ * This class is a GroceryHelper Class and has methods which the main grocery class needs
+ * to assign registers and simulate time.
+ */
 public class GroceryHelper {
     
     static Queue<Customer> customerQueue=GroceryMain.getCustomerQueue();
@@ -16,7 +20,7 @@ public class GroceryHelper {
  * This method picks customer from the main customer queue and puts it in a separate list,which
  * will then be sorted acording to number of items of customers and their type so that we can assign the customer
  * with least items first. 
- * @param customerListArrivedAtSameTime
+ * @param  {@link Queue<Customer>}
  * @param time
  */
     public static void collectSameTimeCustomers(
@@ -31,7 +35,7 @@ public class GroceryHelper {
     /**
      *just keep serving the customer till it items are not empty as soon as they are empty,
      * remove that customer from the queue.
-     * @param customer
+     * @param {@link Queue<Customer>}
      */
     public static void expertServe(Queue<Customer> customer) {
         Customer cust = customer.peek();
@@ -41,7 +45,7 @@ public class GroceryHelper {
     }
     /**
      * 
-     * @param customer
+     * @param {@link Queue<Customer>}
      */
     public static void traineeServe(Queue<Customer> customer) {
         Customer cust = customer.peek();
@@ -58,16 +62,16 @@ public class GroceryHelper {
         }
     }
     /**
-     * 
-     * @param args
-     * @return {@link GroceryMain}
+     *
      * this method will read from the line, the number of registers instantiate the grocery object
      * then will also read the customer records instantiate the customer objects, put them in a customerQueue
      * will return the GroceryMain object, which will in turn have the Grocery Object.
+     * @param args
+     * @return {@link GroceryMain}
      */
     public static GroceryMain initiaize(String[] args) {
         GroceryMain groceryMain = null;
-        Grocery grocery = null;
+        RegisterCollection grocery = null;
         String line = "";
         int firstLine = 0;
         BufferedReader buReader = null;
@@ -84,7 +88,7 @@ public class GroceryHelper {
                 if (firstLine == 0) {
                     try {
                         int noofRegisters = Integer.parseInt(line);
-                        grocery = new Grocery(noofRegisters);
+                        grocery = new RegisterCollection(noofRegisters);
                     } catch (NumberFormatException e) {
                         System.out.println(
                                 "Error in parsing number of registers->"
@@ -106,7 +110,7 @@ public class GroceryHelper {
     }
     /**
      * This method reads the line from the file and constructs and returns a customer object.
-     * @param line
+     * @param {@link String line}
      * @return {@link Customer}
      */
     public static Customer buildCustomerObjects(String line) {

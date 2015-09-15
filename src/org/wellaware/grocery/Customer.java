@@ -2,9 +2,10 @@ package org.wellaware.grocery;
 
 /**
  * 
- * @author hharwani This is the customer class which will tell us what the type
- *         of customer it is, whether he is currently being served ot not ,what
- *         register he is at and what number of items it has
+ * @author hharwani 
+ * This is the customer class which will tell us what the type
+ * of customer it is, whether he is currently being served ot not ,what
+ * register he is at and what number of items it has
  *
  */
 public class Customer implements Comparable<Customer> {
@@ -58,7 +59,7 @@ public class Customer implements Comparable<Customer> {
     }
     /**
      * 
-     * @param {@link}Customer
+     * @param {@link Customer}
      * @return int
      *  comparing the customers based on their item counts, if that is same
      *  comparing them according to their type.
@@ -74,7 +75,6 @@ public class Customer implements Comparable<Customer> {
     }
 
 }
-
 enum Type {
     A, B;
 }
