@@ -75,13 +75,21 @@ public class GroceryHelper {
             buReader = new BufferedReader(
                     new FileReader(new File(args[0])));
         } catch (FileNotFoundException e) {
-            System.out.println("File not found" +e.getMessage());
+            System.out.println("File not found-->" +e.getMessage());
+          //abnormal termination
+            System.exit(-1);
         }
         try {
             while ((line = buReader.readLine()) != null) {
                 if (firstLine == 0) {
-                    int noofRegisters = Integer.parseInt(line);
-                    grocery = new Grocery(noofRegisters);
+                    try {
+                        int noofRegisters = Integer.parseInt(line);
+                        grocery = new Grocery(noofRegisters);
+                    } catch (NumberFormatException e) {
+                        System.out.println(
+                                "Error in parsing number of registers->"
+                                        + e.getMessage());
+                    }
                 } else {
                     Customer customer = buildCustomerObjects(line);
                     customerQueue.offer(customer);
@@ -91,6 +99,8 @@ public class GroceryHelper {
             groceryMain = new GroceryMain(grocery);
         } catch (IOException e) {
             System.out.println("Exception in reading the file" +e.getMessage());
+          //abnormal termination
+            System.exit(-1);
         }
         return groceryMain;
     }
@@ -109,9 +119,14 @@ public class GroceryHelper {
         if (items[0].equals(Type.A.toString())) {
             return new Customer(Type.A, Integer.parseInt(items[1]),
                     Integer.parseInt(items[2]));
-        } else {
+        } else if(items[0].equals(Type.B.toString())) {
             return new Customer(Type.B, Integer.parseInt(items[1]),
                     Integer.parseInt(items[2]));
+        }else{
+            System.out.println("Customer Type is Invalid");
+          //abnormal termination
+            System.exit(-1);
+            return null;
         }
     }
 }
