@@ -11,7 +11,14 @@ import java.util.Queue;
 public class GroceryHelper {
     
     static Queue<Customer> customerQueue=GroceryMain.getCustomerQueue();
-
+ 
+/**
+ * This method picks customer from the main customer queue and puts it in a separate list,which
+ * will then be sorted acording to number of items of customers and their type so that we can assign the customer
+ * with least items first. 
+ * @param customerListArrivedAtSameTime
+ * @param time
+ */
     public static void collectSameTimeCustomers(
             List<Customer> customerListArrivedAtSameTime, int time) {
         Customer customer = customerQueue.peek();
@@ -21,14 +28,21 @@ public class GroceryHelper {
         }
 
     }
-
+    /**
+     *just keep serving the customer till it items are not empty as soon as they are empty,
+     * remove that customer from the queue.
+     * @param customer
+     */
     public static void expertServe(Queue<Customer> customer) {
         Customer cust = customer.peek();
         if (cust != null && cust.servedItems() == 0) {
             customer.poll();
         }
     }
-
+    /**
+     * 
+     * @param customer
+     */
     public static void traineeServe(Queue<Customer> customer) {
         Customer cust = customer.peek();
         if (cust != null) {
@@ -38,7 +52,7 @@ public class GroceryHelper {
                 if (cust.servedItems() == 0) {
                     customer.poll();
                 } else {
-                    cust.setInService(false); //In order to simulate twice the time
+                    cust.setInService(false); //to simulate double time as trainee takes double the time. 
                 }
             }
         }
@@ -80,9 +94,18 @@ public class GroceryHelper {
         }
         return groceryMain;
     }
-    
+    /**
+     * This method reads the line from the file and constructs and returns a customer object.
+     * @param line
+     * @return {@link Customer}
+     */
     public static Customer buildCustomerObjects(String line) {
         String[] items = line.split(" ");
+        if(items.length!=3){
+            System.out.println("Error in Input-->"+line);
+            //abnormal termination
+            System.exit(-1);
+        }
         if (items[0].equals(Type.A.toString())) {
             return new Customer(Type.A, Integer.parseInt(items[1]),
                     Integer.parseInt(items[2]));

@@ -36,7 +36,7 @@ public class GroceryMain {
             List<Customer> customerListArrivedAtSameTime = new ArrayList<Customer>();
             GroceryHelper.collectSameTimeCustomers(customerListArrivedAtSameTime, time);
             //Customers arrived at same time are sorted first according to their item count,
-            //if that is same according to their type.
+            //if that is same then according to their type.
             Collections.sort(customerListArrivedAtSameTime);
             grocery.serviceCustomer(customerListArrivedAtSameTime);
             int index = 0;
